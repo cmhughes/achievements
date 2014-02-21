@@ -1,7 +1,7 @@
-% !arara: pdflatex
-% arara: indent: {overwrite: yes, trace: yes}
+% arara: pdflatex
+% !arara: indent: {overwrite: yes, trace: yes}
 \documentclass[10pt]{article}
-\usepackage[margin=.5cm,foot=0cm,bottom=0cm]{geometry}
+\usepackage[margin=.5cm,left=0cm,foot=0cm,bottom=0cm]{geometry}
 \usepackage{ifthen}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
@@ -51,7 +51,7 @@
 		text=white,
 		fill=black!70,
 		rounded corners=1ex,
-		text width=5cm,
+		text width=4cm,
 		minimum width=3cm,
 		minimum height=0.9cm,
 		align=right,
@@ -62,7 +62,7 @@
 			at position 0cm
 			with
 			{
-				\coordinate (cmh) at (157pt,18pt);
+				\coordinate (cmh) at (127pt,18pt);
 				\node[
 					draw=white,
 					double,
@@ -83,7 +83,7 @@
 	mymatrix/.style={
 		matrix of nodes,
 		nodes in empty cells,
-		column sep=.5cm,
+		column sep=.1cm,
 		execute at empty cell={\node[empty]{};},
 		every even row/.style={nodes={description}},
 	}
@@ -103,11 +103,11 @@
 
 \maketitle
 
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.33\textwidth}
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
-			   & |[badge]|Is this class for me?        \\
+			   & |[badge]|First day \\
 			{} & Attended first day of class           \\
 			   & |[badge]|Perfectionist                \\
 			{} & Earned all bronze badges              \\
@@ -127,7 +127,7 @@
 			{} & Attended office hours                 \\
 			   & |[badge]| Hands up!                   \\
 			{} & Answered a question in class          \\
-			   & |[badge]|Systems of equations         \\
+			   & |[badge]|Systems \\
 			{} & Write-up on systems                   \\
 			   & |[badge]|PolyMult                     \\
 			{} & Write-up on polynomial multiplication \\
@@ -139,7 +139,7 @@
 		};
 	\end{tikzpicture}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.33\textwidth}
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
@@ -171,6 +171,16 @@
 			{} & Submitted the final exam           \\
 			   & |[badge=gold]|Never late           \\
 			{} & Submitted every assignment on time \\
+			%* \end{tabular}
+		};
+	\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}{.33\textwidth}
+	\begin{tikzpicture}
+		\matrix[mymatrix]{
+			%* \begin{tabular}
+			   & |[badge]|Level 1 \\
+			{} & Achieved FIX \\
 			%* \end{tabular}
 		};
 	\end{tikzpicture}
