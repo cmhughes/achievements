@@ -37,6 +37,7 @@
 	\ifthenelse{\equal{#1}{bronze}}{10\addtocounter{totalpoints@tmp}{10}}{}%
 	\ifthenelse{\equal{#1}{silver}}{20\addtocounter{totalpoints@tmp}{20}}{}%
 	\ifthenelse{\equal{#1}{gold}}{30\addtocounter{totalpoints@tmp}{30}}{}%
+	\ifthenelse{\equal{#1}{level}}{+}{}%
 }
 
 \tikzset{
@@ -66,11 +67,9 @@
 				\node[
 					draw=white,
 					double,
-					fill=#1,
+					#1,
 					align=center,
-					circle,
 					text=black,
-					inner sep=0pt,
 				scale=.15,] at (cmh) {\resizebox{2.5cm}{!}{\points{#1}}};
 			}
 		},
@@ -80,6 +79,10 @@
 	description/.style={
 		font=\itshape,
 	},
+	bronze/.style={circle,fill=bronze},
+	silver/.style={rounded corners=0ex,fill=silver, minimum height=2.6cm},
+	gold/.style={isosceles triangle,fill=gold},
+	level/.style={circle,fill=cyan},
 	mymatrix/.style={
 		matrix of nodes,
 		nodes in empty cells,
@@ -88,6 +91,7 @@
 		every even row/.style={nodes={description}},
 	}
 }
+
 
 % define colours for the badges
 \colorlet{bronze}{brown!20!orange}
@@ -99,15 +103,70 @@
 \title{Achievements}
 \author{Math 65}
 \date{}
+
+
+
 \begin{document}
 
+\makeatletter
+\@ifundefined{c@totalpoints}%
+{%
+	\def\mybase{\relax}
+	\def\mymultiplier{\relax}
+    \pgfmathsetmacro{\leveli}{0}
+    \pgfmathsetmacro{\levelii}{0}
+    \pgfmathsetmacro{\leveliii}{0}
+    \pgfmathsetmacro{\leveliv}{0}
+    \pgfmathsetmacro{\levelv}{0}
+    \pgfmathsetmacro{\levelvi}{0}
+    \pgfmathsetmacro{\levelvii}{0}
+    \pgfmathsetmacro{\levelviii}{0}
+    \pgfmathsetmacro{\levelix}{0}
+    \pgfmathsetmacro{\levelx}{0}
+}%
+{%
+	% formula for the levels
+    %       f(x) = a * b^x
+    % 
+	\pgfmathparse{(\the\value{totalpoints}/10)^(1/9)}
+    % b
+	\pgfmathsetmacro{\mybase}{\pgfmathresult}
+    % a
+	\pgfmathsetmacro{\mymultiplier}{10/(\mybase)}
+    % levels 1, 2, 3, ..., 10
+	\pgfmathsetmacro{\leveli}{\mymultiplier*(\mybase)^1}
+	\pgfmathsetmacro{\levelii}{\mymultiplier*(\mybase)^2}
+	\pgfmathsetmacro{\leveliii}{\mymultiplier*(\mybase)^3}
+	\pgfmathsetmacro{\leveliv}{\mymultiplier*(\mybase)^4}
+	\pgfmathsetmacro{\levelv}{\mymultiplier*(\mybase)^5}
+	\pgfmathsetmacro{\levelvi}{\mymultiplier*(\mybase)^6}
+	\pgfmathsetmacro{\levelvii}{\mymultiplier*(\mybase)^7}
+	\pgfmathsetmacro{\levelviii}{\mymultiplier*(\mybase)^8}
+	\pgfmathsetmacro{\levelix}{\mymultiplier*(\mybase)^9}
+	\pgfmathsetmacro{\levelx}{\mymultiplier*(\mybase)^10}
+	%\foreach \i in {1,2,...,10}
+	%{
+	%	\pgfmathparse{\mymultiplier*(\mybase^\i)}
+	%	%\pgfmathroundto{\pgfmathresult}
+	%	%\pgfmathresult
+    %    \makelevels{\@roman{\i}}{\pgfmathresult}
+%
+	%	%\pgfmathsetmacro{\level\@roman{\i}}{\pgfmathresult}
+	%	%\pgfmathroundto{\pgfmathresult}
+	%	%\newcounter{level@\@roman{\i}}
+	%	%\setcounter{level@\@roman{\i}}{\pgfmathresult}
+	%}
+}
+
 \maketitle
+
+\pgfkeys{/pgf/number format/.cd,fixed,precision=0}
 
 \begin{minipage}{.33\textwidth}
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
-			   & |[badge]|First day \\
+			   & |[badge]|First day                    \\
 			{} & Attended first day of class           \\
 			   & |[badge]|Perfectionist                \\
 			{} & Earned all bronze badges              \\
@@ -127,7 +186,7 @@
 			{} & Attended office hours                 \\
 			   & |[badge]| Hands up!                   \\
 			{} & Answered a question in class          \\
-			   & |[badge]|Systems \\
+			   & |[badge]|Systems                      \\
 			{} & Write-up on systems                   \\
 			   & |[badge]|PolyMult                     \\
 			{} & Write-up on polynomial multiplication \\
@@ -179,13 +238,33 @@
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
-			   & |[badge]|Level 1 \\
-			{} & Achieved FIX \\
+			   & |[badge=level]|Level 1            \\
+			{} & Achieved \pgfmathprintnumber{\leveli} points\\
+			   & |[badge=level]|Level 2            \\
+			{} & Achieved \pgfmathprintnumber{\levelii} points\\
+			   & |[badge=level]|Level 3            \\
+			{} & Achieved \pgfmathprintnumber{\leveliii} points\\
+			   & |[badge=level]|Level 4            \\
+			{} & Achieved \pgfmathprintnumber{\leveliv} points\\
+			   & |[badge=level]|Level 5            \\
+			{} & Achieved \pgfmathprintnumber{\levelv} points\\
+			   & |[badge=level]|Level 6            \\
+			{} & Achieved \pgfmathprintnumber{\levelvi} points\\
+			   & |[badge=level]|Level 7            \\
+			{} & Achieved \pgfmathprintnumber{\levelvii} points\\
+			   & |[badge=level]|Level 8            \\
+			{} & \pgfmathprintnumber{\levelviii} pts: correct a write-up\\
+			   & |[badge=level]|Level 9            \\
+			{} & \pgfmathprintnumber{\levelix} pts: correct exam 1 or 2\\
+			   & |[badge=level]|Level 10           \\
+			{} & \pgfmathprintnumber{\levelx} pts: 2\% extra credit\\
 			%* \end{tabular}
 		};
 	\end{tikzpicture}
 \end{minipage}%
 
-\makeatletter
-Total points: \thetotalpoints@tmp
+Total points available: \thetotalpoints@tmp
+
+%Total points available: \thetotalpoints base: \base
+
 \end{document}
