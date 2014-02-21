@@ -1,5 +1,5 @@
-% arara: pdflatex
-% !arara: indent: {overwrite: yes}
+% !arara: pdflatex
+% arara: indent: {overwrite: yes, trace: yes}
 \documentclass[10pt]{article}
 \usepackage[margin=.5cm,foot=0cm,bottom=0cm]{geometry}
 \usepackage{ifthen}
@@ -89,19 +89,22 @@
 	}
 }
 
-\pagestyle{empty}
+% define colours for the badges
+\colorlet{bronze}{brown!20!orange}
+\colorlet{silver}{gray!30!white}
+\colorlet{gold}{yellow!90!white}
 
+% page style, title
+\pagestyle{empty}
 \title{Achievements}
 \author{Math 65}
 \date{}
 \begin{document}
+
 \maketitle
 
 \begin{minipage}{.5\textwidth}
 	\begin{tikzpicture}
-		\colorlet{bronze}{brown!20!orange}
-		\colorlet{silver}{gray!30!white}
-		\colorlet{gold}{yellow!90!white}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
 			   & |[badge]|Is this class for me?        \\
@@ -132,49 +135,47 @@
 			{} & Write-up on exponents                 \\
 			   & |[badge]|FOIL                         \\
 			{} & Write-up on FOIL                      \\
-			};
 			%* \end{tabular}
-		\end{tikzpicture}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		\begin{tikzpicture}
-			\colorlet{bronze}{brown!20!orange}
-			\colorlet{silver}{gray!30!white}
-			\colorlet{gold}{yellow!90!white}
-			\matrix[mymatrix]{
-				%* \begin{tabular}
-				   & |[badge]|Negative exponents        \\
-				{} & Write-up on negative exponents     \\
-				   & |[badge]|Factoring                 \\
-				{} & Write-up on factoring              \\
-				   & |[badge]|Radical                   \\
-				{} & Write-up on radicals               \\
-				   & |[badge]|Solving quadratics        \\
-				{} & Write-up on solving quadratics     \\
-				   & |[badge]|WeBWorK 100\%             \\
-				{} & 100\% in a WeBWorK assignment      \\
-				   & |[badge=silver]|WeBWorK 100\%      \\
-				{} & 100\% in 5 WeBWorK assignments     \\
-				   & |[badge=gold]|WeBWorK 100\%        \\
-				{} & 100\% in 10 WeBWorK assignments    \\
-				   & |[badge]| Dedicated                \\
-				{} & Attended 4 consecutive classes     \\
-				   & |[badge=silver]| Dedicated         \\
-				{} & Attended 10 consecutive classes    \\
-				   & |[badge=gold]| Dedicated           \\
-				{} & Attended 15 consecutive classes    \\
-				   & |[badge=silver]| Exam 1            \\
-				{} & Submitted Exam 1                   \\
-				   & |[badge=silver]| Exam 2            \\
-				{} & Submitted Exam 2                   \\
-				   & |[badge=gold]|Final                \\
-				{} & Submitted the final exam           \\
-				   & |[badge=gold]|Never late           \\
-				{} & Submitted every assignment on time \\
-				};
-				%* \end{tabular}
-			\end{tikzpicture}
-		\end{minipage}%
+		};
+	\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+	\begin{tikzpicture}
+		\matrix[mymatrix]{
+			%* \begin{tabular}
+			   & |[badge]|Negative exponents        \\
+			{} & Write-up on negative exponents     \\
+			   & |[badge]|Factoring                 \\
+			{} & Write-up on factoring              \\
+			   & |[badge]|Radical                   \\
+			{} & Write-up on radicals               \\
+			   & |[badge]|Solving quadratics        \\
+			{} & Write-up on solving quadratics     \\
+			   & |[badge]|WeBWorK 100\%             \\
+			{} & 100\% in a WeBWorK assignment      \\
+			   & |[badge=silver]|WeBWorK 100\%      \\
+			{} & 100\% in 5 WeBWorK assignments     \\
+			   & |[badge=gold]|WeBWorK 100\%        \\
+			{} & 100\% in 10 WeBWorK assignments    \\
+			   & |[badge]| Dedicated                \\
+			{} & Attended 4 consecutive classes     \\
+			   & |[badge=silver]| Dedicated         \\
+			{} & Attended 10 consecutive classes    \\
+			   & |[badge=gold]| Dedicated           \\
+			{} & Attended 15 consecutive classes    \\
+			   & |[badge=silver]| Exam 1            \\
+			{} & Submitted Exam 1                   \\
+			   & |[badge=silver]| Exam 2            \\
+			{} & Submitted Exam 2                   \\
+			   & |[badge=gold]|Final                \\
+			{} & Submitted the final exam           \\
+			   & |[badge=gold]|Never late           \\
+			{} & Submitted every assignment on time \\
+			%* \end{tabular}
+		};
+	\end{tikzpicture}
+\end{minipage}%
 
-		%	Total points: \thetotalpoints
+\makeatletter
+Total points: \thetotalpoints@tmp
 \end{document}
