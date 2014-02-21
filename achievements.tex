@@ -1,22 +1,44 @@
 % arara: pdflatex
 % !arara: indent: {overwrite: yes}
-\documentclass[12pt]{article}
-\usepackage[margin=.5cm]{geometry}
+\documentclass[10pt]{article}
+\usepackage[margin=.5cm,foot=0cm,bottom=0cm]{geometry}
 \usepackage{ifthen}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
 \usetikzlibrary{shapes}
 \usetikzlibrary{decorations}
-%\usetikzlibrary{decorations.shapes}
-%\usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{decorations.markings}
 
-\newcounter{totalpoints}
-\newcommand{\points}[1]{%
-\ifthenelse{\equal{#1}{bronze}}{10\addtocounter{totalpoints}{10}}{}%
-\ifthenelse{\equal{#1}{silver}}{20\addtocounter{totalpoints}{20}}{}%
-\ifthenelse{\equal{#1}{gold}}{30\addtocounter{totalpoints}{30}}{}%
+\makeatletter
+\newcommand{\cmh}[1]{%
+	\@ifundefined{c@totalpoints}%
+	{%
+		\newcounter{totalpoints}
+		\setcounter{totalpoints}{#1}
+		\typeout{Defining a new counter: totalpoints}
+	}%
+	{%
+		\ifnum\value{totalpoints}=#1
+			\typeout{Total points match auxilary file (#1)}
+		\else
+			\typeout{Warning: total points updated from \the\value{totalpoints} to #1-- recompile to fix}
+		\fi
+		\setcounter{totalpoints}{#1}
+	}%
 }
+\AtEndDocument{%
+	\immediate\write\@auxout{%
+		\string\cmh\string{\the\value{totalpoints@tmp}\string}%
+	}
+}
+
+\newcounter{totalpoints@tmp}
+\newcommand{\points}[1]{%
+	\ifthenelse{\equal{#1}{bronze}}{10\addtocounter{totalpoints@tmp}{10}}{}%
+	\ifthenelse{\equal{#1}{silver}}{20\addtocounter{totalpoints@tmp}{20}}{}%
+	\ifthenelse{\equal{#1}{gold}}{30\addtocounter{totalpoints@tmp}{30}}{}%
+}
+
 \tikzset{
 	empty/.style={
 		draw=gray,
@@ -31,94 +53,128 @@
 		rounded corners=1ex,
 		text width=5cm,
 		minimum width=3cm,
-		minimum height=1.1cm,
+		minimum height=0.9cm,
 		align=right,
 		font=\bfseries,
-            %    append after command={
-            %    [very thick,shorten >=0.2bp, shorten <=0.2bp]
-            %                (\tikzlastnode.west)edge(\tikzlastnode.east)coordinate[midway](cmh)
-            %    },
-		%        postaction={\node at (current bounding box.west){f}},
 		decoration={
 			markings,% switch on markings
-        %          %mark = at position 1 with {\arrow{>}}
-%       %           mark = at position 1 with {\arrow{>}}
-       %mark = at position 0.2 with {\node[draw, circle, fill = white, inner sep = .05cm, scale = .75] {2};},
-                %          mark = at position 0 with {\filldraw[black] circle (.05cm);}, 
-			 mark=% actually add a mark
-			 at position 0cm
-			 with
-             {%\node[draw, circle,fill=red,] {f};}%
-                \coordinate (cmh) at (157pt,22pt);
-			 	%\draw[fill=#1] (160pt,18pt) circle (.9ex);
-                \node[
-                draw=white,
-                double,
-                fill=#1,
-                align=center, 
-                circle,
-                text=black,
-                inner sep=0pt,
-                scale=.15,] at (cmh) {\resizebox{2.5cm}{!}{\points{#1}}};
-			 }
+			mark=% actually add a mark
+			at position 0cm
+			with
+			{
+				\coordinate (cmh) at (157pt,18pt);
+				\node[
+					draw=white,
+					double,
+					fill=#1,
+					align=center,
+					circle,
+					text=black,
+					inner sep=0pt,
+				scale=.15,] at (cmh) {\resizebox{2.5cm}{!}{\points{#1}}};
+			}
 		},
 		postaction=decorate,
 	},
 	badge/.default=bronze,
 	description/.style={
-		fill=none,
-		draw=none,
-		text=black,
 		font=\itshape,
 	},
-}
-
-
-\pagestyle{empty}
-\begin{document}
-
-
-\begin{tikzpicture}
-	\colorlet{bronze}{brown!80!orange}
-	\colorlet{silver}{gray!80!white}
-	\colorlet{gold}{yellow!80!white}
-	\matrix[matrix of nodes,
+	mymatrix/.style={
+		matrix of nodes,
 		nodes in empty cells,
 		column sep=.5cm,
 		execute at empty cell={\node[empty]{};},
-		%column 2/.style={nodes={badge}},
-		every even row/.style={
-			nodes={description},
-		},
-	]{
-		%* \begin{tabular}
-		   & |[badge]| Is this class for me?    \\
-		{} & description goes here                  \\
-		   & |[badge=silver]|Is this class for me?  \\
-		{} & description goes here                  \\
-		   & |[badge=gold]|Is this class for me?    \\
-		{} & description goes here                  \\
-		   & |[badge=bronze]| Is this class for me? \\
-		{} & description goes here                  \\
-		};
-		%* \end{tabular}
-	\end{tikzpicture}
-\end{document}
+		every even row/.style={nodes={description}},
+	}
+}
 
-% old attempt
-% old attempt
-% old attempt
-\begin{tikzpicture}
-	\matrix[matrix of nodes,
-		nodes in empty cells,
-		execute at empty cell={\node[empty]{};},
-		column 2/.style={nodes={badge}},
-		column 3/.style={nodes={font=\itshape}},
-	]{%
-		& Is this class for me? & description goes here\\
-		& Is this class for me? & description goes here\\
-		& Is this class for me? & description goes here\\
-		& Is this class for me? & description goes here\\
-		& Is this class for me? & description goes here\\
-	};
-\end{tikzpicture}
+\pagestyle{empty}
+
+\title{Achievements}
+\author{Math 65}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{minipage}{.5\textwidth}
+	\begin{tikzpicture}
+		\colorlet{bronze}{brown!20!orange}
+		\colorlet{silver}{gray!30!white}
+		\colorlet{gold}{yellow!90!white}
+		\matrix[mymatrix]{
+			%* \begin{tabular}
+			   & |[badge]|Is this class for me?        \\
+			{} & Attended first day of class           \\
+			   & |[badge]|Perfectionist                \\
+			{} & Earned all bronze badges              \\
+			   & |[badge=silver]|Perfectionist         \\
+			{} & Earned all silver badges              \\
+			   & |[badge=gold]|Perfectionist           \\
+			{} & Earned all badges                     \\
+			   & |[badge]| Quiz me                     \\
+			{} & Submitted a quiz (on time)            \\
+			   & |[badge=silver]| Quiz me              \\
+			{} & Submitted 3 quizzes (on time)         \\
+			   & |[badge=gold]| Quiz me                \\
+			{} & Submitted all quizzes (on time)       \\
+			   & |[badge]| SLC                         \\
+			{} & Attended office hours in SLC          \\
+			   & |[badge]| SSB 317                     \\
+			{} & Attended office hours                 \\
+			   & |[badge]| Hands up!                   \\
+			{} & Answered a question in class          \\
+			   & |[badge]|Systems of equations         \\
+			{} & Write-up on systems                   \\
+			   & |[badge]|PolyMult                     \\
+			{} & Write-up on polynomial multiplication \\
+			   & |[badge]|Exponents                    \\
+			{} & Write-up on exponents                 \\
+			   & |[badge]|FOIL                         \\
+			{} & Write-up on FOIL                      \\
+			};
+			%* \end{tabular}
+		\end{tikzpicture}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\begin{tikzpicture}
+			\colorlet{bronze}{brown!20!orange}
+			\colorlet{silver}{gray!30!white}
+			\colorlet{gold}{yellow!90!white}
+			\matrix[mymatrix]{
+				%* \begin{tabular}
+				   & |[badge]|Negative exponents        \\
+				{} & Write-up on negative exponents     \\
+				   & |[badge]|Factoring                 \\
+				{} & Write-up on factoring              \\
+				   & |[badge]|Radical                   \\
+				{} & Write-up on radicals               \\
+				   & |[badge]|Solving quadratics        \\
+				{} & Write-up on solving quadratics     \\
+				   & |[badge]|WeBWorK 100\%             \\
+				{} & 100\% in a WeBWorK assignment      \\
+				   & |[badge=silver]|WeBWorK 100\%      \\
+				{} & 100\% in 5 WeBWorK assignment      \\
+				   & |[badge=gold]|WeBWorK 100\%        \\
+				{} & 100\% in 10 WeBWorK assignment     \\
+				   & |[badge]| Dedicated                \\
+				{} & Attended 4 consequtive classes     \\
+				   & |[badge=silver]| Dedicated         \\
+				{} & Attended 10 consequtive classes    \\
+				   & |[badge=gold]| Dedicated           \\
+				{} & Attended 15 consequtive classes    \\
+				   & |[badge=silver]| Exam 1            \\
+				{} & Submitted Exam 1                   \\
+				   & |[badge=silver]| Exam 2            \\
+				{} & Submitted Exam 2                   \\
+				   & |[badge=gold]|Final                \\
+				{} & Submitted the final exam           \\
+				   & |[badge=gold]|Never late           \\
+				{} & Submitted every assignment on time \\
+				};
+				%* \end{tabular}
+			\end{tikzpicture}
+		\end{minipage}%
+
+		%	Total points: \thetotalpoints
+\end{document}
