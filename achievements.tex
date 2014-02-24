@@ -129,11 +129,12 @@
 	% formula for the levels
     %       f(x) = a * b^x
     % 
-	\pgfmathparse{(\the\value{totalpoints}/10)^(1/9)}
+    \pgfmathsetmacro{\levelOnePoints}{30}
+	\pgfmathparse{(\the\value{totalpoints}/\levelOnePoints)^(1/9)}
     % b
 	\pgfmathsetmacro{\mybase}{\pgfmathresult}
     % a
-	\pgfmathsetmacro{\mymultiplier}{10/(\mybase)}
+	\pgfmathsetmacro{\mymultiplier}{\levelOnePoints/(\mybase)}
     % levels 1, 2, 3, ..., 10
 	\pgfmathsetmacro{\leveli}{\mymultiplier*(\mybase)^1}
 	\pgfmathsetmacro{\levelii}{\mymultiplier*(\mybase)^2}
