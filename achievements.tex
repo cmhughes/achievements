@@ -114,50 +114,29 @@
 {%
 	\def\mybase{\relax}
 	\def\mymultiplier{\relax}
-    \pgfmathsetmacro{\leveli}{0}
-    \pgfmathsetmacro{\levelii}{0}
-    \pgfmathsetmacro{\leveliii}{0}
-    \pgfmathsetmacro{\leveliv}{0}
-    \pgfmathsetmacro{\levelv}{0}
-    \pgfmathsetmacro{\levelvi}{0}
-    \pgfmathsetmacro{\levelvii}{0}
-    \pgfmathsetmacro{\levelviii}{0}
-    \pgfmathsetmacro{\levelix}{0}
-    \pgfmathsetmacro{\levelx}{0}
 }%
 {%
 	% formula for the levels
-    %       f(x) = a * b^x
-    % 
-    \pgfmathsetmacro{\levelOnePoints}{30}
+	%       f(x) = a * b^x
+	%
+	\pgfmathsetmacro{\levelOnePoints}{30}
 	\pgfmathparse{(\the\value{totalpoints}/\levelOnePoints)^(1/9)}
-    % b
+	% b
 	\pgfmathsetmacro{\mybase}{\pgfmathresult}
-    % a
+	% a
 	\pgfmathsetmacro{\mymultiplier}{\levelOnePoints/(\mybase)}
-    % levels 1, 2, 3, ..., 10
-	\pgfmathsetmacro{\leveli}{\mymultiplier*(\mybase)^1}
-	\pgfmathsetmacro{\levelii}{\mymultiplier*(\mybase)^2}
-	\pgfmathsetmacro{\leveliii}{\mymultiplier*(\mybase)^3}
-	\pgfmathsetmacro{\leveliv}{\mymultiplier*(\mybase)^4}
-	\pgfmathsetmacro{\levelv}{\mymultiplier*(\mybase)^5}
-	\pgfmathsetmacro{\levelvi}{\mymultiplier*(\mybase)^6}
-	\pgfmathsetmacro{\levelvii}{\mymultiplier*(\mybase)^7}
-	\pgfmathsetmacro{\levelviii}{\mymultiplier*(\mybase)^8}
-	\pgfmathsetmacro{\levelix}{\mymultiplier*(\mybase)^9}
-	\pgfmathsetmacro{\levelx}{\mymultiplier*(\mybase)^10}
-	%\foreach \i in {1,2,...,10}
-	%{
-	%	\pgfmathparse{\mymultiplier*(\mybase^\i)}
-	%	%\pgfmathroundto{\pgfmathresult}
-	%	%\pgfmathresult
-    %    \makelevels{\@roman{\i}}{\pgfmathresult}
-%
-	%	%\pgfmathsetmacro{\level\@roman{\i}}{\pgfmathresult}
-	%	%\pgfmathroundto{\pgfmathresult}
-	%	%\newcounter{level@\@roman{\i}}
-	%	%\setcounter{level@\@roman{\i}}{\pgfmathresult}
-	%}
+}
+
+% compute the points at each level
+\newcommand{\levelpts}[1]{%     #1: level
+	\@ifundefined{c@totalpoints}%
+	{%
+		??%
+	}%
+	{%
+		\pgfmathparse{\mymultiplier*(\mybase)^#1}%
+		\pgfmathprintnumber{\pgfmathresult}%
+	}%
 }
 
 \maketitle
@@ -185,7 +164,7 @@
 			   & |[badge]| SLC                         \\
 			{} & Attended office hours in SLC          \\
 			   & |[badge]| SSB 317                     \\
-			{} & Attended office hours in SSB 317                 \\
+			{} & Attended office hours in SSB 317      \\
 			   & |[badge]| Hands up!                   \\
 			{} & Answered a question in class          \\
 			   & |[badge]|Systems                      \\
@@ -240,31 +219,31 @@
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
-			   & |[badge=level]|Level 1            \\
-			{} & Achieved \pgfmathprintnumber{\leveli} points\\
-			   & |[badge=level]|Level 2            \\
-			{} & Achieved \pgfmathprintnumber{\levelii} points\\
-			   & |[badge=level]|Level 3            \\
-			{} & Achieved \pgfmathprintnumber{\leveliii} points\\
-			   & |[badge=level]|Level 4            \\
-			{} & Achieved \pgfmathprintnumber{\leveliv} points\\
-			   & |[badge=level]|Level 5            \\
-			{} & Achieved \pgfmathprintnumber{\levelv} points\\
-			   & |[badge=level]|Level 6            \\
-			{} & Achieved \pgfmathprintnumber{\levelvi} points\\
-			   & |[badge=level]|Level 7            \\
-			{} & Achieved \pgfmathprintnumber{\levelvii} points\\
-			   & |[badge=level]|Level 8            \\
-			{} & \pgfmathprintnumber{\levelviii} pts: correct a write-up\\
-			   & |[badge=level]|Level 9            \\
-			{} & \pgfmathprintnumber{\levelix} pts: correct exam 1 or 2\\
-			   & |[badge=level]|Level 10           \\
-			{} & \pgfmathprintnumber{\levelx} pts: 2\% extra credit\\
+			   & |[badge=level]|Level 1                         \\
+			{} & Achieved \levelpts{1} points                   \\
+			   & |[badge=level]|Level 2                         \\
+			{} & Achieved \levelpts{2} points                   \\
+			   & |[badge=level]|Level 3                         \\
+			{} & Achieved \levelpts{3} points                   \\
+			   & |[badge=level]|Level 4                         \\
+			{} & Achieved \levelpts{4} points                   \\
+			   & |[badge=level]|Level 5                         \\
+			{} & Achieved \levelpts{5} points                   \\
+			   & |[badge=level]|Level 6                         \\
+			{} & Achieved \levelpts{6} points                   \\
+			   & |[badge=level]|Level 7                         \\
+			{} & Achieved \levelpts{7} points                   \\
+			   & |[badge=level]|Level 8                         \\
+			{} & Achieved \levelpts{8} pts: correct a write-up  \\
+			   & |[badge=level]|Level 9                         \\
+			{} & Achieved \levelpts{9} pts: correct exam 1 or 2 \\
+			   & |[badge=level]|Level 10                        \\
+			{} & Achieved \levelpts{10} pts: 2\% extra credit   \\
 			%* \end{tabular}
 		};
 	\end{tikzpicture}
 
-Total points available: \thetotalpoints@tmp
+	Total points available: \thetotalpoints@tmp
 \end{minipage}%
 
 
