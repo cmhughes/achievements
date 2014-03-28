@@ -139,6 +139,10 @@
 	}%
 }
 
+% counter for the levels
+\newcounter{level}
+\newcommand{\steplevel}{\stepcounter{level}\thelevel}
+
 \maketitle
 
 \pgfkeys{/pgf/number format/.cd,fixed,precision=0}
@@ -219,26 +223,26 @@
 	\begin{tikzpicture}
 		\matrix[mymatrix]{
 			%* \begin{tabular}
-			   & |[badge=level]|Level 1                         \\
-			{} & Achieved \levelpts{1} points                   \\
-			   & |[badge=level]|Level 2                         \\
-			{} & Achieved \levelpts{2} points                   \\
-			   & |[badge=level]|Level 3                         \\
-			{} & Achieved \levelpts{3} points                   \\
-			   & |[badge=level]|Level 4                         \\
-			{} & Achieved \levelpts{4} points                   \\
-			   & |[badge=level]|Level 5                         \\
-			{} & Achieved \levelpts{5} points                   \\
-			   & |[badge=level]|Level 6                         \\
-			{} & Achieved \levelpts{6} points                   \\
-			   & |[badge=level]|Level 7                         \\
-			{} & Achieved \levelpts{7} points                   \\
-			   & |[badge=level]|Level 8                         \\
-			{} & Achieved \levelpts{8} pts: correct a write-up  \\
-			   & |[badge=level]|Level 9                         \\
-			{} & Achieved \levelpts{9} pts: correct exam 1 or 2 \\
-			   & |[badge=level]|Level 10                        \\
-			{} & Achieved \levelpts{10} pts: 2\% extra credit   \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & Achieved \levelpts{\thelevel} points                                                                                                       \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & |[text width=4cm]|Achieved \levelpts{\thelevel} pts: receive an answer during an exam                                                      \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & |[text width=4cm]|Achieved \levelpts{\thelevel} pts: full credit for a write-up without submitting                                         \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & |[text width=4cm]|Achieved \levelpts{\thelevel} pts: correct exam 1 or 2--score will be calculated by an average of original and corrected \\
+			   & |[badge=level]|Level \steplevel                                                                                                            \\
+			{} & |[text width=4cm]|Achieved \levelpts{\thelevel} pts: 3\% extra credit                                                                      \\
 			%* \end{tabular}
 		};
 	\end{tikzpicture}
